@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cars – DriveHive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ffcc00;
+      --dark: #1e1e2f;
+      --light-bg: #f4f6f8;
+      --text-dark: #222;
+      --text-light: #555;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background-color: var(--light-bg);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      color: var(--text-dark);
+    }
+
+    header {
+      background-color: var(--dark);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a.active, nav a:hover {
+      color: var(--primary);
+    }
+
+    main {
+      flex: 1;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--dark);
+    }
+
+    #carList {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .car-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .car-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    .car-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .car-details {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .car-details h3 {
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    .car-details p {
+      margin: 0.3rem 0;
+      color: var(--text-light);
+    }
+
+    .price {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      background-color: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 1.5rem 2rem;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>DriveHive</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cars.html" class="active">Cars</a></li>
+        <li><a href="bookings.html">Bookings</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Available Cars</h2>
+    <div id="carList"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 DriveHive. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const cars = [
+      { id: "tesla-model-s", name: "Tesla Model S", type: "Electric", year: 2024, price: "$89,000", img: "assets/images/tesla.jpeg", description: "A premium all-electric sedan with impressive range and performance." },
+      { id: "ford-mustang", name: "Ford Mustang", type: "Gasoline", year: 2023, price: "$55,000", img: "assets/images/mustang.jpeg", description: "An iconic American muscle car with unmatched style and power." },
+      // { id: "chevrolet-bolt", name: "Chevrolet Bolt", type: "Electric", year: 2024, price: "$32,000", img: "assets/images/chevrolet.jpeg", description: "Affordable and efficient — perfect for city driving." },
+      // { id: "bmw-m4", name: "BMW M4", type: "Gasoline", year: 2023, price: "$76,000", img: "assets/images/bmw m4.jpeg", description: "Precision engineering meets bold design." },
+      // { id: "audi-a6", name: "Audi A6", type: "Hybrid", year: 2024, price: "$68,000", img: "assets/images/audi a6.jpeg", description: "Luxury, efficiency, and technology combined." },
+      // { id: "mercedes-c-class", name: "Mercedes C-Class", type: "Gasoline", year: 2023, price: "$62,000", img: "assets/images/mercedes.jpeg", description: "Where comfort meets performance." }
+    ];
+
+    const carList = document.getElementById("carList");
+
+    cars.forEach(car => {
+      const card = document.createElement("div");
+      card.className = "car-card";
+      card.innerHTML = `
+        <img src="${car.img}" alt="${car.name}">
+        <div class="car-details">
+          <h3>${car.name}</h3>
+          <p>${car.type} | ${car.year}</p>
+          <p class="price">${car.price}</p>
+        </div>
+      `;
+      // Make the entire card clickable
+      card.addEventListener("click", () => {
+        window.location.href = `car.html?id=${car.id}`;
+      });
+      carList.appendChild(card);
+    });
+  </script>
+</body>
+</html>

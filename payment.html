@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment – DriveHive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ffcc00;
+      --dark: #1e1e2f;
+      --light-bg: #f4f6f8;
+      --text-dark: #222;
+      --text-light: #555;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background-color: var(--light-bg);
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: var(--dark);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1rem;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    main {
+      flex: 1;
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+      padding: 2rem;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .car-summary {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .car-summary img {
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .car-summary h3 {
+      margin-top: 1rem;
+      color: var(--dark);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    label {
+      font-weight: 500;
+      color: var(--dark);
+    }
+
+    input, select {
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: var(--primary);
+      border: none;
+      padding: 0.9rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background-color: #ffe066;
+    }
+
+    .back-btn {
+      background-color: #ccc;
+    }
+
+    .back-btn:hover {
+      background-color: #bbb;
+    }
+
+    footer {
+      background-color: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 1.5rem 2rem;
+      margin-top: auto;
+    }
+
+    .confirmation {
+      text-align: center;
+      color: var(--dark);
+      padding: 2rem;
+    }
+
+    .confirmation h2 {
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>DriveHive</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="cars.html">Cars</a>
+      <a href="bookings.html">Bookings</a>
+    </nav>
+  </header>
+
+  <main id="paymentContainer">
+    <!-- Payment form loads here -->
+  </main>
+
+  <footer>
+    <p>&copy; 2025 DriveHive. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const cars = [
+      { id: "tesla-model-s", name: "Tesla Model S", price: "$89,000", img: "assets/images/tesla.jpeg" },
+      { id: "ford-mustang", name: "Ford Mustang", price: "$55,000", img: "assets/images/mustang.jpeg" },
+      { id: "chevrolet-bolt", name: "Chevrolet Bolt", price: "$32,000", img: "assets/images/chevrolet.jpeg" },
+      { id: "bmw-m4", name: "BMW M4", price: "$76,000", img: "assets/images/bmw m4.jpeg" },
+      { id: "audi-a6", name: "Audi A6", price: "$68,000", img: "assets/images/audi a6.jpeg" },
+      { id: "mercedes-c-class", name: "Mercedes C-Class", price: "$62,000", img: "assets/images/mercedes.jpeg" }
+    ];
+
+    // Get car ID from URL
+    const params = new URLSearchParams(window.location.search);
+    const carId = params.get("id");
+
+    const car = cars.find(c => c.id === carId);
+    const container = document.getElementById("paymentContainer");
+
+    if (car) {
+      container.innerHTML = `
+        <h2>Payment for ${car.name}</h2>
+        <div class="car-summary">
+          <img src="${car.img}" alt="${car.name}">
+          <h3>${car.name}</h3>
+          <p>Price: <strong>${car.price}</strong></p>
+        </div>
+        <form id="paymentForm">
+          <label>Full Name</label>
+          <input type="text" id="name" required>
+
+          <label>Email Address</label>
+          <input type="email" id="email" required>
+
+          <label>Phone Number</label>
+          <input type="tel" id="phone" required>
+
+          <label>Payment Method</label>
+          <select id="payment" required>
+            <option value="">Select Payment Method</option>
+            <option>Credit Card</option>
+            <option>Debit Card</option>
+            <option>PayPal</option>
+          </select>
+
+          <label>Card Number</label>
+          <input type="text" id="card" maxlength="16" placeholder="Enter card number" required>
+
+          <button type="submit">Confirm Payment</button>
+          <button type="button" class="back-btn" onclick="window.location.href='car.html?id=${car.id}'">Back</button>
+        </form>
+      `;
+    } else {
+      container.innerHTML = `<p style="text-align:center;">Car not found.</p>`;
+    }
+
+    // Handle payment confirmation
+    document.addEventListener("submit", e => {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const method = document.getElementById("payment").value;
+
+      // Save booking to localStorage
+      const bookings = JSON.parse(localStorage.getItem("drivehive_bookings")) || [];
+      bookings.push({
+        car: car.name,
+        price: car.price,
+        img: car.img,
+        name,
+        method
+      });
+      localStorage.setItem("drivehive_bookings", JSON.stringify(bookings));
+
+      // Show confirmation
+      container.innerHTML = `
+        <div class="confirmation">
+          <h2>Payment Successful 🎉</h2>
+          <p>Thank you, <strong>${name}</strong>! Your payment for the <strong>${car.name}</strong> has been confirmed.</p>
+          <p>We’ll email your booking confirmation and receipt shortly.</p>
+          <button onclick="window.location.href='bookings.html'">View My Bookings</button>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>

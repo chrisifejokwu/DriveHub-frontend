@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Details – DriveHive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ffcc00;
+      --dark: #1e1e2f;
+      --light-bg: #f4f6f8;
+      --text-dark: #222;
+      --text-light: #555;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background-color: var(--light-bg);
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: var(--dark);
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+
+    main {
+      flex: 1;
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .car-hero img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+    }
+
+    .car-info {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .car-info h2 {
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .car-info p {
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+
+    .price {
+      color: var(--primary);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    button {
+      background-color: var(--primary);
+      border: none;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #ffdb4d;
+    }
+
+    footer {
+      background-color: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 1.5rem 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>DriveHive</h1>
+  </header>
+
+  <main id="carContainer"></main>
+
+  <footer>
+    <p>&copy; 2025 DriveHive. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const cars = [
+      { id: "tesla-model-s", name: "Tesla Model S", type: "Electric", year: 2024, price: "$89,000", img: "assets/images/tesla.jpeg", description: "A premium all-electric sedan with impressive range and performance." },
+      { id: "ford-mustang", name: "Ford Mustang", type: "Gasoline", year: 2023, price: "$55,000", img: "assets/images/mustang.jpeg", description: "An iconic American muscle car with unmatched style and power." },
+      { id: "chevrolet-bolt", name: "Chevrolet Bolt", type: "Electric", year: 2024, price: "$32,000", img: "assets/images/chevrolet.jpeg", description: "An affordable electric hatchback ideal for city commuting." },
+      { id: "bmw-m4", name: "BMW M4", type: "Gasoline", year: 2023, price: "$76,000", img: "assets/images/bmw m4.jpeg", description: "A luxury performance coupe with aggressive styling and speed." },
+      { id: "audi-a6", name: "Audi A6", type: "Hybrid", year: 2024, price: "$68,000", img: "assets/images/audi a6.jpeg", description: "A hybrid sedan that balances elegance, comfort, and efficiency." },
+      { id: "mercedes-c-class", name: "Mercedes C-Class", type: "Gasoline", year: 2023, price: "$62,000", img: "assets/images/mercedes.jpeg", description: "A stylish and luxurious compact executive sedan." }
+    ];
+
+    // Get car ID from URL
+    const params = new URLSearchParams(window.location.search);
+    const carId = params.get("id");
+
+    const car = cars.find(c => c.id === carId);
+    const container = document.getElementById("carContainer");
+
+    if (car) {
+      container.innerHTML = `
+        <div class="car-hero">
+          <img src="${car.img}" alt="${car.name}">
+        </div>
+        <div class="car-info">
+          <h2>${car.name}</h2>
+          <p>${car.type} | ${car.year}</p>
+          <p>${car.description}</p>
+          <div class="price">${car.price}</div>
+          <button onclick="window.location.href='payment.html?id=${car.id}'">Book Now</button>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `<p style="text-align:center; padding:2rem;">Car not found.</p>`;
+    }
+  </script>
+</body>
+</html>

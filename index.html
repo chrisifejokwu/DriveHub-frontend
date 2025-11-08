@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DriveHive – Find Your Drive</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Reset + base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      color: #222;
+      background-color: #f4f6f8;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #111827;
+      color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo span {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffcc00;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ffcc00;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                  url('images/hero-drivehive.jpg') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 6rem 1rem;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: #e2e2e2;
+    }
+
+    .hero .btn {
+      background: #ffcc00;
+      color: #111827;
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .hero .btn:hover {
+      background: #e6b800;
+    }
+
+    /* Featured Cars Section */
+    .featured {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+      text-align: center;
+    }
+
+    .featured h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: #1e1e2f;
+    }
+
+    .car-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .car-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .car-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .car-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .car-card .details {
+      padding: 1rem;
+    }
+
+    .car-card h3 {
+      color: #111827;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .car-card p {
+      color: #555;
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .car-card .price {
+      font-weight: 600;
+      color: #ffcc00;
+      font-size: 1.1rem;
+    }
+
+    /* CTA Section */
+    .cta {
+      background: linear-gradient(90deg, #1e1e2f, #343456);
+      color: white;
+      text-align: center;
+      padding: 3rem 1rem;
+      margin-top: 3rem;
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta a {
+      display: inline-block;
+      background: #ffcc00;
+      color: #1e1e2f;
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .cta a:hover {
+      background: #e6b800;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #111827;
+      color: white;
+      padding: 2rem 0 1rem;
+      margin-top: auto;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 2rem;
+    }
+
+    .footer-section h3 {
+      color: #ffcc00;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section p, .footer-section a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .footer-section a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      border-top: 1px solid #333;
+      padding-top: 1rem;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.3rem; }
+      .featured h2 { font-size: 1.7rem; }
+      nav ul { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo"><span>DriveHive</span></div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cars.html">Cars</a></li>
+        <li><a href="bookings.html">My Bookings</a></li>
+        <!-- <li><a href="login.html">Login</a></li> -->
+        <li><a href="register.html">Register</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Find. Book. Drive.</h1>
+    <p>Your dream car is just a few clicks away — explore DriveHive today.</p>
+    <a href="cars.html" class="btn">Get Started</a>
+  </section>
+
+  <!-- Featured Cars -->
+  <section class="featured">
+    <h2>Featured Cars</h2>
+    <div class="car-grid">
+      <div class="car-card">
+        <img src="assets/images/tesla.jpeg" alt="Tesla Model S">
+        <div class="details">
+          <h3>Tesla Model S</h3>
+          <p>Electric | Automatic | 2024</p>
+          <p class="price">$89,000</p>
+        </div>
+      </div>
+      <div class="car-card">
+        <img src="assets/images/bmw m4.jpeg" alt="BMW M4">
+        <div class="details">
+          <h3>BMW M4</h3>
+          <p>Gasoline | Manual | 2023</p>
+          <p class="price">$76,000</p>
+        </div>
+      </div>
+      <div class="car-card">
+        <img src="assets/images/audi a6.jpeg" alt="Audi A6">
+        <div class="details">
+          <h3>Audi A6</h3>
+          <p>Hybrid | Automatic | 2024</p>
+          <p class="price">$68,000</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call To Action -->
+  <section class="cta">
+    <h2>Ready to Start Your Journey?</h2>
+    <a href="register.html">Join DriveHive</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>About</h3>
+        <p>DriveHive helps you find, book, and buy your dream car — all from the comfort of your home.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Explore</h3>
+        <p><a href="cars.html">Browse Cars</a></p>
+        <p><a href="bookings.html">My Bookings</a></p>
+      </div>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p>Email: support@drivehive.com</p>
+        <p>Phone: +1 234 567 890</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 DriveHive. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="services/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

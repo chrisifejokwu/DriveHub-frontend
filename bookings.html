@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bookings – DriveHive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ffcc00;
+      --dark: #1e1e2f;
+      --light-bg: #f4f6f8;
+      --text-dark: #222;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background-color: var(--light-bg);
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: var(--dark);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1rem;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    main {
+      flex: 1;
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--dark);
+      margin-bottom: 2rem;
+    }
+
+    .booking-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .booking-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .booking-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .details {
+      padding: 1rem;
+      flex-grow: 1;
+    }
+
+    .details h3 {
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .details p {
+      margin: 0.2rem 0;
+      color: #555;
+    }
+
+    .delete-btn {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 0.7rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      width: 90%;
+      margin: 0.8rem auto 1rem;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #e63939;
+    }
+
+    footer {
+      background-color: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: auto;
+    }
+
+    .empty {
+      text-align: center;
+      color: #666;
+      font-size: 1.2rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>DriveHive</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="cars.html">Cars</a>
+      <a href="bookings.html">My Bookings</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>My Bookings</h1>
+    <div id="bookingsContainer" class="booking-grid"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 DriveHive. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const container = document.getElementById("bookingsContainer");
+
+    function renderBookings() {
+      const bookings = JSON.parse(localStorage.getItem("drivehive_bookings")) || [];
+      container.innerHTML = "";
+
+      if (bookings.length === 0) {
+        container.innerHTML = `<p class="empty">You have no bookings yet.</p>`;
+        return;
+      }
+
+      bookings.forEach((booking, index) => {
+        const card = document.createElement("div");
+        card.className = "booking-card";
+        card.innerHTML = `
+          <img src="${booking.img}" alt="${booking.car}">
+          <div class="details">
+            <h3>${booking.car}</h3>
+            <p><strong>Price:</strong> ${booking.price}</p>
+            <p><strong>Name:</strong> ${booking.name}</p>
+            <p><strong>Payment:</strong> ${booking.method}</p>
+          </div>
+          <button class="delete-btn" data-index="${index}">Delete Booking</button>
+        `;
+        container.appendChild(card);
+      });
+
+      document.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.addEventListener("click", e => {
+          const index = e.target.getAttribute("data-index");
+          deleteBooking(index);
+        });
+      });
+    }
+
+    function deleteBooking(index) {
+      const bookings = JSON.parse(localStorage.getItem("drivehive_bookings")) || [];
+      bookings.splice(index, 1);
+      localStorage.setItem("drivehive_bookings", JSON.stringify(bookings));
+      renderBookings();
+    }
+
+    renderBookings();
+  </script>
+</body>
+</html>
