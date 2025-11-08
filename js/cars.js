@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from "react";
 
-function App() {
-  const [data, setData] = useState(null);
 
-  useEffect(() => {
-    // change this to your backend URL
-    fetch("http://localhost:3000/api/v1/cars")
-      .then(res => res.json())
-      .then(data => setData(data.message))
-      .catch(err => console.error("Error fetching data:", err));
-  }, []);
+function displayCars() {
 
-  return (
-    <div className="App">
-      <h1>{data ? data : "Loading..."}</h1>
-    </div>
-  );
+  const carList = document.getElementById("carList");
+  getCars().then(cars => {
+    cars.forEach(car => {
+      const card = document.createElement("div");
+      card.className = "car-card";
+      card.innerHTML = `
+          <img src="${car.imageUrl}" alt="${car.make}">
+        <div class="car-details">
+          <h3>${car.make}</h3>
+          <p>${car.model} | ${car.year}</p>
+          <p class="price">${car.price}</p>
+        </div>
+      `;
+      // Make the entire card clickable
+      card.addEventListener("click", () => {
+        window.location.href = `car.html?id=${car.id}`;
+      });
+      carList.appendChild(card);
+    });
+  });
 }
 
-export default App;
+displayCars();
